@@ -1,0 +1,15 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1545 1639" width="1545" height="1639">
+	<title>logo (3)-svg</title>
+	<style>
+		.s0 { fill: #53ba65 } 
+		.s1 { fill: #008156 } 
+		.s2 { fill: #2196cb } 
+		.s3 { fill: #154b8e } 
+	</style>
+	<g id="Full_Color">
+		<path id="Layer" fill-rule="evenodd" class="s0" d="m988.4 1639h-960.1l347.8-411.2h814.6c132.4 0 306.7-215.2 353.4-374.3 0 434.2-156.6 785.5-555.7 785.5z"/>
+		<path id="Layer" fill-rule="evenodd" class="s1" d="m1190.7 1227.8v-776.6l353.4-417.6v819.9c-46.7 159.1-219.8 374.3-353.4 374.3z"/>
+		<path id="Layer" fill-rule="evenodd" class="s2" d="m555.7 0.2h960.1l-347.6 411.3h-814.8c-132.4 0-306.7 215.2-353.4 374.3 0-434.2 156.6-785.6 555.7-785.6z"/>
+		<path id="Layer" fill-rule="evenodd" class="s3" d="m353.4 411.5v776.6l-353.4 417.6v-819.9c46.7-158.9 220.3-374.3 353.4-374.3z"/>
+	</g>
+</svg>
