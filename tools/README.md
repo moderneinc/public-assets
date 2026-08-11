@@ -17,9 +17,9 @@ Each tenant has up to four files:
 
 ```
 login/<slug>.svg              wordmark, dark ink   -> light UI
-login/<slug>-dark.svg         wordmark, light ink  -> dark UI
+login/<slug>.dark.svg         wordmark, light ink  -> dark UI
 square-icons/<slug>.svg       symbol,   dark ink   -> light UI
-square-icons/<slug>-dark.svg  symbol,   light ink  -> dark UI
+square-icons/<slug>.dark.svg  symbol,   light ink  -> dark UI
 ```
 
 Icons are bare transparent symbols. A few brands legitimately keep a coloured
@@ -28,7 +28,7 @@ of a blue box), Grubhub (the guide requires the GH monogram be framed), bol
 (their own app icon is a circle). Don't "fix" those.
 
 Do **not** put `@media (prefers-color-scheme: dark)` inside an SVG. It follows
-the OS setting, not the app's theme toggle, so it fights the `-dark.svg` files
+the OS setting, not the app's theme toggle, so it fights the `.dark.svg` files
 and can render a logo invisible. `strip` below removes them.
 
 ## Commands
@@ -56,7 +56,7 @@ tools/venv/bin/python tools/gen_brand_sheet.py
 
 1. Get the official reversed/white mark from the brand's own site — their dark
    footer or favicon is usually a better source than a press kit.
-2. Drop in `<slug>.svg` and `<slug>-dark.svg`; wrap rasters with
+2. Drop in `<slug>.svg` and `<slug>.dark.svg`; wrap rasters with
    `assetlib.wrap_raster()`, which downscales to 512px.
 3. `audit_assets.py`, then `contact_sheet.py` and actually look at it.
 4. `gen_brand_sheet.py`.
