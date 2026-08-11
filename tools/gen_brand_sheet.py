@@ -27,8 +27,8 @@ FIXED = uri(f'<svg xmlns="http://www.w3.org/2000/svg" width="220" height="42" vi
 
 
 def scan(d):
-    base = {f[:-4] for f in os.listdir(d) if f.endswith(".svg") and not f.endswith("-dark.svg")}
-    dark = {f[:-9] for f in os.listdir(d) if f.endswith("-dark.svg")}
+    base = {f[:-4] for f in os.listdir(d) if f.endswith(".svg") and not f.endswith(".dark.svg")}
+    dark = {f[:-9] for f in os.listdir(d) if f.endswith(".dark.svg")}
     return base, dark
 
 
@@ -36,7 +36,7 @@ def pair_cells(dirname, slug, has_base, has_dark, kind):
     if not has_base:
         return ('<div class="swatch light"><span class="none">&mdash;</span></div>'
                 '<div class="swatch dark"><span class="none">&mdash;</span></div>')
-    src = f"{dirname}/{slug}-dark.svg" if has_dark else f"{dirname}/{slug}.svg"
+    src = f"{dirname}/{slug}.dark.svg" if has_dark else f"{dirname}/{slug}.svg"
     cls = "" if has_dark else " untreated"
     return (f'<div class="swatch light"><img class="{kind}" src="{dirname}/{slug}.svg" alt="{slug} {kind} light"></div>'
             f'<div class="swatch dark{cls}"><img class="{kind}" src="{src}" alt="{slug} {kind} dark"></div>')
@@ -161,7 +161,7 @@ TEMPLATE = '''<!doctype html>
   <p class="sub">
     {n} tenants &middot; <code>login/</code> wordmarks and <code>square-icons/</code> symbols,
     each on white and on <code>#111827</code>.
-    {nl} login logos and {ni} icons ship a <code>-dark.svg</code>; {nmiss} still do not.
+    {nl} login logos and {ni} icons ship a <code>.dark.svg</code>; {nmiss} still do not.
     Anything without a dark variant is shown over a hatched swatch &mdash; if it reads cleanly
     there it needs no dark treatment. Regenerate with <code>tools/gen_brand_sheet.py</code>.
   </p>

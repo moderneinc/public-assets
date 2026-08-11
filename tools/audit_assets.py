@@ -81,7 +81,7 @@ def main():
 
     print(f"\n{'=' * 92}\nSUMMARY\n{'=' * 92}")
     for name, p in summary.items():
-        for key, label in [("no_viewbox", "missing viewBox"), ("no_dark", "no -dark.svg"),
+        for key, label in [("no_viewbox", "missing viewBox"), ("no_dark", "no .dark.svg"),
                            ("dark_fail", "unreadable on dark"), ("light_fail", "check on light"),
                            ("bloat", "oversized")]:
             if p[key]:

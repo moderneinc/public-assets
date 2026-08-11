@@ -95,7 +95,7 @@ def svg_files(directory, include_dark=True):
     for f in sorted(os.listdir(directory)):
         if not f.endswith(".svg"):
             continue
-        if not include_dark and f.endswith("-dark.svg"):
+        if not include_dark and f.endswith(".dark.svg"):
             continue
         out.append(f)
     return out
@@ -105,5 +105,5 @@ def pairs(directory):
     """(slug, light_path, dark_path_or_None) for every base asset in a directory."""
     for f in svg_files(directory, include_dark=False):
         slug = f[:-4]
-        dark = os.path.join(directory, f"{slug}-dark.svg")
+        dark = os.path.join(directory, f"{slug}.dark.svg")
         yield slug, os.path.join(directory, f), (dark if os.path.exists(dark) else None)
