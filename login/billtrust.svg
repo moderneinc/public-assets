@@ -1,9 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 24" fill="none">
   <style>
     .text { fill: #032325; }
-    @media (prefers-color-scheme: dark) {
-      .text { fill: white; }
-    }
   </style>
   <mask id="mask0_426_3085" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="120" height="24"><path d="M0 0H120V24H0V0Z" fill="white"/></mask>
   <g mask="url(#mask0_426_3085)">
