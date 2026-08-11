@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moderne customer brand sheet</title>
+<style>
+  :root {
+    --bg:#f4f5f7; --fg:#14181f; --muted:#616a7a; --line:#dfe3ea; --card:#fff;
+    --sw-light:#fff; --sw-dark:#111827; --warn:#b4530a; --warn-bg:#fdf0e3;
+    --note:#3b5bb5; --note-bg:#e8eefb; --bad:#b42318; --good:#087443;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:#0d1017; --fg:#e8ecf3; --muted:#8d97a8; --line:#242b38; --card:#151a23;
+      --warn:#f0a459; --warn-bg:#33240f; --note:#8fb0ef; --note-bg:#1b2740;
+      --bad:#f27166; --good:#4ec98a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:#0d1017; --fg:#e8ecf3; --muted:#8d97a8; --line:#242b38; --card:#151a23;
+    --warn:#f0a459; --warn-bg:#33240f; --note:#8fb0ef; --note-bg:#1b2740;
+    --bad:#f27166; --good:#4ec98a;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:2rem 1.5rem 4rem; background:var(--bg); color:var(--fg);
+         font:15px/1.5 ui-sans-serif,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  .wrap { max-width:1280px; margin:0 auto; }
+  h1 { font-size:1.5rem; margin:0 0 .35rem; letter-spacing:-.01em; }
+  .sub { color:var(--muted); margin:0 0 1.5rem; font-size:.9rem; max-width:82ch; }
+  code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.85em; }
+  .grid { display:grid; gap:1rem; grid-template-columns:repeat(auto-fill,minmax(420px,1fr)); }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+  .card header { display:flex; align-items:center; gap:.4rem; padding:.6rem .8rem;
+                  border-bottom:1px solid var(--line); flex-wrap:wrap; }
+  .card h2 { font:500 .82rem/1 ui-monospace,SFMono-Regular,Menlo,monospace; margin:0;
+              color:var(--muted); letter-spacing:.02em; margin-right:auto; }
+  .badge { font-size:.66rem; padding:.15rem .45rem; border-radius:4px; font-weight:600;
+            text-transform:uppercase; letter-spacing:.04em; background:var(--warn-bg); color:var(--warn); }
+  .badge.note { background:var(--note-bg); color:var(--note); }
+  .badge.stub { background:transparent; color:var(--muted); border:1px solid var(--line); }
+  .row { display:grid; grid-template-columns:1fr auto; }
+  .cell + .cell { border-left:1px solid var(--line); }
+  .lbl { font:600 .62rem/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted);
+          text-transform:uppercase; letter-spacing:.08em; padding:.45rem .7rem .3rem; }
+  .pair { display:grid; grid-template-columns:1fr 1fr; }
+  .swatch { display:grid; place-items:center; min-height:84px; padding:.9rem; }
+  .swatch.light { background:var(--sw-light); }
+  .swatch.dark { background:var(--sw-dark); }
+  .swatch.dark.untreated { background:repeating-linear-gradient(45deg,#111827,#111827 9px,#171f31 9px,#171f31 18px); }
+  img.wide { max-width:100%; max-height:40px; width:auto; height:auto; display:block; }
+  img.sq { width:52px; height:52px; display:block; }
+  .cell:last-child .pair { min-width:200px; }
+  .none { color:#6b7280; font-size:1.1rem; }
+
+  body[data-view="light"] .swatch.dark, body[data-view="dark"] .swatch.light { display:none; }
+  body[data-view="light"] .pair, body[data-view="dark"] .pair { grid-template-columns:1fr; }
+
+  /* Scale stress: force art to fill a box wider than its authored size. An SVG with
+     width/height but no viewBox has no user-coordinate mapping and cannot scale. */
+  body[data-view="stress"] .swatch { place-items:start; min-height:120px; }
+  body[data-view="stress"] img.wide { width:100%; height:auto; max-height:none; }
+  body[data-view="stress"] img.sq { width:100%; height:auto; }
+  body[data-view="stress"] .explainer { display:block; }
+  .explainer { display:none; margin-bottom:1.5rem; }
+  .demo { display:grid; grid-template-columns:1fr 1fr; }
+  .demo > div { padding:1rem; background:#fff; }
+  .demo > div + div { border-left:1px solid var(--line); }
+  .demo img { width:100%; height:auto; display:block; }
+  .cap { font:600 .7rem/1.4 ui-monospace,SFMono-Regular,Menlo,monospace; margin-bottom:.6rem;
+          text-transform:uppercase; letter-spacing:.04em; }
+  .cap.bad { color:var(--bad); } .cap.good { color:var(--good); }
+
+  .bar { display:flex; gap:.4rem; margin-bottom:1.25rem; flex-wrap:wrap; }
+  .bar button { font:inherit; font-size:.82rem; padding:.35rem .8rem; cursor:pointer;
+                 background:var(--card); color:var(--fg); border:1px solid var(--line); border-radius:6px; }
+  .bar button[aria-pressed="true"] { background:var(--fg); color:var(--bg); border-color:var(--fg); }
+  .key { display:flex; gap:1.1rem; flex-wrap:wrap; font-size:.78rem; color:var(--muted); margin-bottom:1.5rem; }
+  .key i { display:inline-block; width:11px; height:11px; border-radius:3px; vertical-align:-1px; margin-right:.3rem; }
+</style>
+</head>
+<body data-view="both">
+<div class="wrap">
+  <h1>Moderne customer brand sheet</h1>
+  <p class="sub">
+    35 tenants &middot; <code>login/</code> wordmarks and <code>square-icons/</code> symbols,
+    each on white and on <code>#111827</code>.
+    34 login logos and 34 icons ship a <code>-dark.svg</code>; 1 still do not.
+    Anything without a dark variant is shown over a hatched swatch &mdash; if it reads cleanly
+    there it needs no dark treatment. Regenerate with <code>tools/gen_brand_sheet.py</code>.
+  </p>
+
+  <div class="bar">
+    <button data-v="both" aria-pressed="true">Side by side</button>
+    <button data-v="light" aria-pressed="false">Light only</button>
+    <button data-v="dark" aria-pressed="false">Dark only</button>
+    <button data-v="stress" aria-pressed="false">Scale stress</button>
+  </div>
+
+  <div class="key">
+    <span><i style="background:repeating-linear-gradient(45deg,#111827,#111827 5px,#171f31 5px,#171f31 10px)"></i>hatched = no dark variant</span>
+    <span><i style="background:var(--warn-bg);border:1px solid var(--warn)"></i>needs a dark login file</span>
+    <span><i style="background:var(--note-bg);border:1px solid var(--note)"></i>icon has no dark variant</span>
+  </div>
+
+  <section class="explainer">
+    <p class="sub">
+      Every asset is forced to <code>width: 100%</code> in a box wider than its authored size.
+      An SVG that declares <code>width</code>/<code>height</code> but no <code>viewBox</code> has no
+      user-coordinate mapping, so it cannot scale &mdash; it paints at intrinsic size anchored top-left.
+      Both controls are identical artwork; only the <code>viewBox</code> differs. Any logo that renders
+      small and corner-pinned here is missing its <code>viewBox</code>.
+    </p>
+    <div class="card"><div class="demo">
+      <div><div class="cap bad">control &mdash; no viewBox &mdash; cannot scale</div><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMjAiIGhlaWdodD0iNDIiPjxyZWN0IHg9IjYiIHk9IjEwIiB3aWR0aD0iMjYiIGhlaWdodD0iMjIiIHJ4PSI1IiBmaWxsPSIjMjU2M2ViIi8+PHJlY3QgeD0iNDAiIHk9IjE0IiB3aWR0aD0iOTYiIGhlaWdodD0iNyIgcng9IjMuNSIgZmlsbD0iIzBmMTcyYSIvPjxyZWN0IHg9IjQwIiB5PSIyNiIgd2lkdGg9IjYyIiBoZWlnaHQ9IjYiIHJ4PSIzIiBmaWxsPSIjOTRhM2I4Ii8+PC9zdmc+" alt="no viewBox"></div>
+      <div><div class="cap good">control &mdash; viewBox set &mdash; scales</div><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMjAiIGhlaWdodD0iNDIiIHZpZXdCb3g9IjAgMCAyMjAgNDIiPjxyZWN0IHg9IjYiIHk9IjEwIiB3aWR0aD0iMjYiIGhlaWdodD0iMjIiIHJ4PSI1IiBmaWxsPSIjMjU2M2ViIi8+PHJlY3QgeD0iNDAiIHk9IjE0IiB3aWR0aD0iOTYiIGhlaWdodD0iNyIgcng9IjMuNSIgZmlsbD0iIzBmMTcyYSIvPjxyZWN0IHg9IjQwIiB5PSIyNiIgd2lkdGg9IjYyIiBoZWlnaHQ9IjYiIHJ4PSIzIiBmaWxsPSIjOTRhM2I4Ii8+PC9zdmc+" alt="viewBox set"></div>
+    </div></div>
+  </section>
+
+  <div class="grid">
+    <article class="card">
+      <header><h2>ageas</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/ageas.svg" alt="ageas wide light"></div><div class="swatch dark"><img class="wide" src="login/ageas-dark.svg" alt="ageas wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/ageas.svg" alt="ageas sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/ageas-dark.svg" alt="ageas sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>allstate</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/allstate.svg" alt="allstate wide light"></div><div class="swatch dark"><img class="wide" src="login/allstate-dark.svg" alt="allstate wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/allstate.svg" alt="allstate sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/allstate-dark.svg" alt="allstate sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>amex</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/amex.svg" alt="amex wide light"></div><div class="swatch dark"><img class="wide" src="login/amex-dark.svg" alt="amex wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/amex.svg" alt="amex sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/amex-dark.svg" alt="amex sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>app</h2><span class="badge stub">placeholder</span><span class="badge note">icon untreated</span></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/app.svg" alt="app wide light"></div><div class="swatch dark untreated"><img class="wide" src="login/app.svg" alt="app wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/app.svg" alt="app sq light"></div><div class="swatch dark untreated"><img class="sq" src="square-icons/app.svg" alt="app sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>billtrust</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/billtrust.svg" alt="billtrust wide light"></div><div class="swatch dark"><img class="wide" src="login/billtrust-dark.svg" alt="billtrust wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/billtrust.svg" alt="billtrust sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/billtrust-dark.svg" alt="billtrust sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>boatsgroup</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/boatsgroup.svg" alt="boatsgroup wide light"></div><div class="swatch dark"><img class="wide" src="login/boatsgroup-dark.svg" alt="boatsgroup wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/boatsgroup.svg" alt="boatsgroup sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/boatsgroup-dark.svg" alt="boatsgroup sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>bol</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/bol.svg" alt="bol wide light"></div><div class="swatch dark"><img class="wide" src="login/bol-dark.svg" alt="bol wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/bol.svg" alt="bol sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/bol-dark.svg" alt="bol sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>cambridge</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/cambridge.svg" alt="cambridge wide light"></div><div class="swatch dark"><img class="wide" src="login/cambridge-dark.svg" alt="cambridge wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/cambridge.svg" alt="cambridge sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/cambridge-dark.svg" alt="cambridge sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>cambridgepress</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/cambridgepress.svg" alt="cambridgepress wide light"></div><div class="swatch dark"><img class="wide" src="login/cambridgepress-dark.svg" alt="cambridgepress wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/cambridgepress.svg" alt="cambridgepress sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/cambridgepress-dark.svg" alt="cambridgepress sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>capitalone</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/capitalone.svg" alt="capitalone wide light"></div><div class="swatch dark"><img class="wide" src="login/capitalone-dark.svg" alt="capitalone wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/capitalone.svg" alt="capitalone sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/capitalone-dark.svg" alt="capitalone sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>choicehotels</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/choicehotels.svg" alt="choicehotels wide light"></div><div class="swatch dark"><img class="wide" src="login/choicehotels-dark.svg" alt="choicehotels wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/choicehotels.svg" alt="choicehotels sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/choicehotels-dark.svg" alt="choicehotels sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>colruyt</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/colruyt.svg" alt="colruyt wide light"></div><div class="swatch dark"><img class="wide" src="login/colruyt-dark.svg" alt="colruyt wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/colruyt.svg" alt="colruyt sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/colruyt-dark.svg" alt="colruyt sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>corpay</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/corpay.svg" alt="corpay wide light"></div><div class="swatch dark"><img class="wide" src="login/corpay-dark.svg" alt="corpay wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/corpay.svg" alt="corpay sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/corpay-dark.svg" alt="corpay sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>desjardins</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/desjardins.svg" alt="desjardins wide light"></div><div class="swatch dark"><img class="wide" src="login/desjardins-dark.svg" alt="desjardins wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/desjardins.svg" alt="desjardins sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/desjardins-dark.svg" alt="desjardins sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>dev</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/dev.svg" alt="dev wide light"></div><div class="swatch dark"><img class="wide" src="login/dev-dark.svg" alt="dev wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/dev.svg" alt="dev sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/dev-dark.svg" alt="dev sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>devaz</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/devaz.svg" alt="devaz wide light"></div><div class="swatch dark"><img class="wide" src="login/devaz-dark.svg" alt="devaz wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/devaz.svg" alt="devaz sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/devaz-dark.svg" alt="devaz sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>federatedinsurance</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/federatedinsurance.svg" alt="federatedinsurance wide light"></div><div class="swatch dark"><img class="wide" src="login/federatedinsurance-dark.svg" alt="federatedinsurance wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/federatedinsurance.svg" alt="federatedinsurance sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/federatedinsurance-dark.svg" alt="federatedinsurance sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>fedins</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/fedins.svg" alt="fedins wide light"></div><div class="swatch dark"><img class="wide" src="login/fedins-dark.svg" alt="fedins wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/fedins.svg" alt="fedins sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/fedins-dark.svg" alt="fedins sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>glencore</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/glencore.svg" alt="glencore wide light"></div><div class="swatch dark"><img class="wide" src="login/glencore-dark.svg" alt="glencore wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/glencore.svg" alt="glencore sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/glencore-dark.svg" alt="glencore sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>grubhub</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/grubhub.svg" alt="grubhub wide light"></div><div class="swatch dark"><img class="wide" src="login/grubhub-dark.svg" alt="grubhub wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/grubhub.svg" alt="grubhub sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/grubhub-dark.svg" alt="grubhub sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>hmh</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/hmh.svg" alt="hmh wide light"></div><div class="swatch dark"><img class="wide" src="login/hmh-dark.svg" alt="hmh wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/hmh.svg" alt="hmh sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/hmh-dark.svg" alt="hmh sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>interactions</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/interactions.svg" alt="interactions wide light"></div><div class="swatch dark"><img class="wide" src="login/interactions-dark.svg" alt="interactions wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/interactions.svg" alt="interactions sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/interactions-dark.svg" alt="interactions sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>lendingclub</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/lendingclub.svg" alt="lendingclub wide light"></div><div class="swatch dark"><img class="wide" src="login/lendingclub-dark.svg" alt="lendingclub wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/lendingclub.svg" alt="lendingclub sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/lendingclub-dark.svg" alt="lendingclub sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>localhost</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/localhost.svg" alt="localhost wide light"></div><div class="swatch dark"><img class="wide" src="login/localhost-dark.svg" alt="localhost wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/localhost.svg" alt="localhost sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/localhost-dark.svg" alt="localhost sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>lombardodier</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/lombardodier.svg" alt="lombardodier wide light"></div><div class="swatch dark"><img class="wide" src="login/lombardodier-dark.svg" alt="lombardodier wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/lombardodier.svg" alt="lombardodier sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/lombardodier-dark.svg" alt="lombardodier sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>medhost</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/medhost.svg" alt="medhost wide light"></div><div class="swatch dark"><img class="wide" src="login/medhost-dark.svg" alt="medhost wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/medhost.svg" alt="medhost sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/medhost-dark.svg" alt="medhost sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>morganstanley</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/morganstanley.svg" alt="morganstanley wide light"></div><div class="swatch dark"><img class="wide" src="login/morganstanley-dark.svg" alt="morganstanley wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/morganstanley.svg" alt="morganstanley sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/morganstanley-dark.svg" alt="morganstanley sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>onetrust</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/onetrust.svg" alt="onetrust wide light"></div><div class="swatch dark"><img class="wide" src="login/onetrust-dark.svg" alt="onetrust wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/onetrust.svg" alt="onetrust sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/onetrust-dark.svg" alt="onetrust sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>palmettogba</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/palmettogba.svg" alt="palmettogba wide light"></div><div class="swatch dark"><img class="wide" src="login/palmettogba-dark.svg" alt="palmettogba wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/palmettogba.svg" alt="palmettogba sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/palmettogba-dark.svg" alt="palmettogba sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>paysafe</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/paysafe.svg" alt="paysafe wide light"></div><div class="swatch dark"><img class="wide" src="login/paysafe-dark.svg" alt="paysafe wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/paysafe.svg" alt="paysafe sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/paysafe-dark.svg" alt="paysafe sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>sap</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/sap.svg" alt="sap wide light"></div><div class="swatch dark"><img class="wide" src="login/sap-dark.svg" alt="sap wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/sap.svg" alt="sap sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/sap-dark.svg" alt="sap sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>shelter</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/shelter.svg" alt="shelter wide light"></div><div class="swatch dark"><img class="wide" src="login/shelter-dark.svg" alt="shelter wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/shelter.svg" alt="shelter sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/shelter-dark.svg" alt="shelter sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>squarespace</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/squarespace.svg" alt="squarespace wide light"></div><div class="swatch dark"><img class="wide" src="login/squarespace-dark.svg" alt="squarespace wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/squarespace.svg" alt="squarespace sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/squarespace-dark.svg" alt="squarespace sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>sunbit</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/sunbit.svg" alt="sunbit wide light"></div><div class="swatch dark"><img class="wide" src="login/sunbit-dark.svg" alt="sunbit wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/sunbit.svg" alt="sunbit sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/sunbit-dark.svg" alt="sunbit sq dark"></div></div></div>
+      </div>
+    </article>
+    <article class="card">
+      <header><h2>swissquote</h2></header>
+      <div class="row">
+        <div class="cell"><div class="lbl">login</div><div class="pair"><div class="swatch light"><img class="wide" src="login/swissquote.svg" alt="swissquote wide light"></div><div class="swatch dark"><img class="wide" src="login/swissquote-dark.svg" alt="swissquote wide dark"></div></div></div>
+        <div class="cell"><div class="lbl">icon</div><div class="pair"><div class="swatch light"><img class="sq" src="square-icons/swissquote.svg" alt="swissquote sq light"></div><div class="swatch dark"><img class="sq" src="square-icons/swissquote-dark.svg" alt="swissquote sq dark"></div></div></div>
+      </div>
+    </article>
+  </div>
+</div>
+<script>
+  const bar = document.querySelector('.bar');
+  bar.addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    document.body.dataset.view = b.dataset.v;
+    bar.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  });
+</script>
+</body>
+</html>

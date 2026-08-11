@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Grubhub "GH" letterforms lifted verbatim from the official https://www.grubhub.com/icon.svg,
+     with the #FF5500 rounded-square plate removed. NOTE: Grubhub's 2025 Visual Identity Guidelines
+     state the monogram "must always be framed within a rounded square or a circle", so this
+     un-plated version is OFF-GUIDELINE. Kept only as an option. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="27.2 44.2 139.6 106.4">
+<path fill="#FFFFFF" d="M63.4341 149.425C41.3712 149.425 28.7368 130.819 28.7368 98.3539C28.7368 65.8886 41.7483 45.3843 64.1886 45.3843C86.6286 45.3843 95.3029 60.1929 96.4345 84.8743H73.9942C72.8629 72.3439 69.6571 65.1291 63.9999 65.1291C58.3427 65.1291 51.5542 76.7103 51.5542 98.3539C51.5542 119.997 55.8914 130.06 64.1886 130.06C72.4858 130.06 73.9942 123.035 74.9371 112.593H61.7369V92.6581H96.4345C96.0574 111.074 96.0574 134.616 96.4345 147.906H82.103L81.1601 141.261C76.6343 146.577 70.7887 149.425 63.6228 149.425H63.4341Z"/>
+<path fill="#FFFFFF" d="M165.264 46.523V147.906H143.012V107.656H128.303V147.906H106.24V46.523H128.303V87.7217H143.012V46.523H165.264Z"/>
+</svg>
